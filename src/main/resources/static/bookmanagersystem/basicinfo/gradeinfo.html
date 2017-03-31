@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>年级信息</title>
+	<!-- Bootstrap核心CSS文件 -->
+	<!-- Bootstrap核心CSS文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"></link>
+	<!-- 可选的Bootstrap主题文件(一般不用引入) -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css"></link>
+	<!-- jQuery文件，在bootstrap.min.js之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+	<!-- Bootstrap核心JavaScript文件 -->
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/vue2.js"></script>
+	<script src="/js/vue2.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+<div id="Mygradeinfo">
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="btn btn-primary btn-lg" style="text-shadow: black 5px 3px 3px;">
+				<span class=" glyphicon glyphicon-paperclip "></span> 年级信息管理
+			</button>
+			<button type="button" class="btn btn-default navbar-btn" id="modal-521717" v-on:click="getCollegeList" href="#modal-container-521717" data-toggle="modal" style="margin-left:30px;">
+				<span class="glyphicon glyphicon-plus">添加</span>
+			</button>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul  class="navbar-form navbar-left" role="search" style="width:100px;">
+
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="搜索学院，专业，年级或校区" style="width:400px;" v-model="searchData" />
+				</div>
+			</ul>
+			<ul class="nav navbar-nav navbar-right"  style="width:100px;">
+				<button  v-on:click="getList" type="button" class="btn btn-info navbar-btn">
+					查看全部
+				</button>
+
+
+			</ul>
+		</div>
+	</div>
+</nav>
+
+
+<div class="col-md-12 column">
+	<table class="table table-striped table-hover">
+		<thead>
+		<tr>
+			<th>
+				学院
+			</th>
+			<th>
+				年级
+			</th>
+			<th>
+				专业
+			</th>
+
+			<th>
+				班级数目
+			</th>
+			<th>
+				应购书人数
+			</th>
+			<th>
+				校区
+			</th>
+			<th>
+				几年制
+			</th>
+			<th>
+				操作
+			</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr v-for="item in filteredgradeinfo">
+
+			<td class="success">
+				{{ item.college }}
+			</td>
+			<td >
+				{{ item.grade }}
+			</td>
+			<td class="danger">
+				{{ item.profession }}
+			</td>
+			<td>
+				{{ item.numofclass }}
+			</td>
+			<td class="warning">
+				{{ item.numofstu }}
+			</td>
+			<td>
+				{{ item.campus }}
+			</td>
+			<td class="success">
+				{{ item.schoolSystem }}
+			</td>
+			<td>
+				<button type="button" class="btn "  href="#modal-container-521718" data-toggle="modal" v-on:click="deleteitem=item">
+					<span class=" glyphicon glyphicon-trash"></span>删除
+				</button>
+			</td>
+		</tr>
+
+		</tbody>
+	</table>
+</div>
+
+<!--删除弹出框-->
+<div class="modal fade" id="modal-container-521718" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+				<h4 class="modal-title" id="myModalLabel">
+					删除该条年级信息？
+				</h4>
+			</div>
+			<div class="modal-body">
+				{{ deleteitem.college }}+" "+{{ deleteitem.profession }}+{{ deleteitem.grade }}+{{ deleteitem.campus }}
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" type="button" data-dismiss="modal">取消</button> <button class="btn btn-primary" type="button" data-dismiss="modal" v-on:click="getitemdelete">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--添加弹出框-->
+<div class="modal fade" id="modal-container-521717" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+				<h4 class="modal-title" id="myModalLabel">
+					添加年级信息
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row clearfix">
+					<div class="col-md-9 column">
+						<div>
+							<label >学院</label>
+							<input list="pasta" class="form-control" v-model="addgradeinfo.college">
+							<datalist id="pasta">
+								<option v-for="college in Allcolleges">{{college}}</option>
+							</datalist>
+
+						</div>
+						<div>
+							<label >年级</label>
+							<input list="gradelists" class="form-control" v-model="addgradeinfo.grade">
+							<datalist id="gradelists">
+								<option v-for="grade in Allgrade">{{grade}}</option>
+							</datalist>
+						</div>
+						<div>
+							<label >专业</label>
+							<input list="professionlists" class="form-control" v-model="addgradeinfo.profession">
+							<datalist id="professionlists">
+								<option v-for="profession in AllProfession">{{profession}}</option>
+							</datalist>
+						</div>
+						<div>
+							<label >几年制</label>
+							<input list="schoolSystemlists" class="form-control" v-model="addgradeinfo.schoolSystem">
+							<datalist id="schoolSystemlists">
+								<option v-for="schoolSystem in AllschoolSystem">{{schoolSystem}}</option>
+							</datalist>
+						</div>
+						<div>
+							<label >校区</label>
+							<input list="campuslists" class="form-control" v-model="addgradeinfo.campus">
+							<datalist id="campuslists">
+								<option v-for="campus in Allcampus">{{campus}}</option>
+							</datalist>
+						</div>
+
+
+						<div>
+							<label >班级数目</label>
+							<input class="form-control"  type="text" v-model="addgradeinfo.numofclass" />
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" type="button" data-dismiss="modal">关闭</button> <button class="btn btn-primary" type="button" data-dismiss="modal" v-on:click="addgradeinfo()">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+</div>
+<!--获取lists数据-->
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 包括所有已编译的插件 -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="http://static.runoob.com/code/js/vueapp.js"></script>
+<script src="/js/gradeinfo.js"></script>
+
+</body>
+</html>

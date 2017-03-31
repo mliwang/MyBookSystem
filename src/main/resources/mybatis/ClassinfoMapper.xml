@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.mybookmanager.mapper.ClassinfoMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.mybookmanager.model.Classinfo" >
+    <id column="classId" property="classid" jdbcType="INTEGER" />
+    <result column="className" property="classname" jdbcType="VARCHAR" />
+    <result column="numOfClassStu" property="numofclassstu" jdbcType="INTEGER" />
+    <result column="gradeId" property="gradeid" jdbcType="INTEGER" />
+    <result column="numOforderBookstu" property="numoforderbookstu" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    classId, className, numOfClassStu, gradeId, numOforderBookstu
+  </sql>
+  <!--查询全部信息-->
+  <select id="selectAllClassinfo" resultType="cn.mybookmanager.pojo.FullClassinfo" >
+    select
+    classinfo.*,
+    college,grade,profession,campus
+    from classinfo,gradeinfo
+    where classinfo.gradeId=gradeinfo.gradeId
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo
+    where classId = #{classid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classinfo
+    where classId = #{classid,jdbcType=INTEGER}
+  </delete>
+<!--添加班级-->
+  <insert id="insert" parameterType="cn.mybookmanager.model.Classinfo" >
+    insert into classinfo (classId, className, numOfClassStu, 
+      gradeId, numOforderBookstu)
+    values (#{classid,jdbcType=INTEGER}, #{classname,jdbcType=VARCHAR}, #{numofclassstu,jdbcType=INTEGER}, 
+      #{gradeid,jdbcType=INTEGER}, #{numoforderbookstu,jdbcType=INTEGER})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="cn.mybookmanager.model.Classinfo" >
+    update classinfo
+    set className = #{classname,jdbcType=VARCHAR},
+      numOfClassStu = #{numofclassstu,jdbcType=INTEGER},
+      gradeId = #{gradeid,jdbcType=INTEGER},
+      numOforderBookstu = #{numoforderbookstu,jdbcType=INTEGER}
+    where classId = #{classid,jdbcType=INTEGER}
+  </update>
+</mapper>
