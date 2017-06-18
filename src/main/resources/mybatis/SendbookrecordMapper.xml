@@ -31,7 +31,8 @@
     FROM sendbookrecord
     WHERE
     <if test="forsemeter!=null and forsemeter!=''">forsemeter= #{forsemeter,jdbcType=VARCHAR}</if>
-
+    <if test="bookid!=null and bookid!=''">AND   bookid= #{bookid,jdbcType=VARCHAR} </if>
+    <if test="classid!=null and classid!=''">AND classId= #{classid,jdbcType=VARCHAR}</if>
   </select>
 
   <insert id="insertSelective" parameterType="cn.mybookmanager.model.Sendbookrecord" >

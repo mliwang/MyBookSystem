@@ -79,6 +79,7 @@ public class BookPurchasingServiceimp implements BookPurchasingService {
     @Transactional
     @Override
    public boolean addToRecords(List<Fullbookrecords> allrecords){
+        //TODO
         boolean r=true;
         String purchasetime = allrecords.get(0).getPurchasetime();
         String syearstring= purchasetime.substring(0, 4);
@@ -87,13 +88,21 @@ public class BookPurchasingServiceimp implements BookPurchasingService {
         String endmonthstring = purchasetime.substring(12, 13);
         purchasetime=syearstring+"年"+smonthstring+"月至"+endyearstring+"年"+endmonthstring+"月";
          try {
-            for (Fullbookrecords fbookrecords:allrecords) {
+             //  public Bookrecords(String bookmemuid, String bookid, String bookcontent, String supplier, Integer booknum, String purchasetime)
+             for (Fullbookrecords fbookrecords:allrecords) {
                 Bookinfo bookinfo = fbookrecords.getBookinfo();
                 String bookcontent=bookinfo.getPublishunit()+"出版第"+bookinfo.getEdition()+"版"
                         +bookinfo.getBookname()+"("+bookinfo.getAuthor()+"著)";
                 fbookrecords.setBookcontent(bookcontent);
                 fbookrecords.setPurchasetime(purchasetime);
-                int insert = bookrecordsMapper.insert(fbookrecords);
+                 //看之前是否已经买了这个书
+                 List<Bookrecords> bookrecordses = bookrecordsMapper.selectBookrecordsByPrimary(new Bookrecords(null, fbookrecords.getBookid(), null, null, null, purchasetime));
+                 if (bookrecordses.size()<=0){//没产生过购书单，更新库存
+                     Bookinfo bookinfo1 = bookinfoMapper.selectByPrimaryKey(fbookrecords.getBookid());
+                     bookinfo1.setInventory(bookinfo1.getInventory()+fbookrecords.getBooknum());
+                     bookinfoMapper.updateByPrimaryKey(bookinfo1);
+                 }
+                 int insert = bookrecordsMapper.insert(fbookrecords);
                 if (insert<0)throw new RuntimeException("形成记录失败");
             }
         } catch ( RuntimeException e){
@@ -164,6 +173,15 @@ public class BookPurchasingServiceimp implements BookPurchasingService {
         try {
             for (Sendbookrecord sendbookrecord:allrecords) {
                 sendbookrecord.setForsemeter(purchasetime);
+                //看之前是否已经发了这个班
+                List<Sendbookrecord> sendbookrecords1 = sendbookrecordMapper.selectSendbookrecord(new Sendbookrecord(null, sendbookrecord.getClassid(), null, null, null, sendbookrecord.getBookid(), null, purchasetime));
+                if (sendbookrecords1.size()<=0){//该班没产生过purchasetime时段用的发书单，更新库存
+                    Bookinfo bookinfo1 = bookinfoMapper.selectByPrimaryKey(sendbookrecord.getBookid());
+                    Integer numoforderbookstu = classinfoMapper.selectByPrimaryKey(sendbookrecord.getClassid()).getNumoforderbookstu();
+                    bookinfo1.setInventory(bookinfo1.getInventory()-numoforderbookstu);
+                    bookinfoMapper.updateByPrimaryKey(bookinfo1);
+                }
+
                 int insert =sendbookrecordMapper.insert(sendbookrecord);
                 if (insert<0)throw new RuntimeException("形成记录失败");
             }
