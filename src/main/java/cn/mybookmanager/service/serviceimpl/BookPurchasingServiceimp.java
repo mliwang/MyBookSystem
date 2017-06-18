@@ -173,7 +173,7 @@ public class BookPurchasingServiceimp implements BookPurchasingService {
         try {
             for (Sendbookrecord sendbookrecord:allrecords) {
                 sendbookrecord.setForsemeter(purchasetime);
-                //看之前是否已经发了这个班
+                //看之前是否已经发了这个班的
                 List<Sendbookrecord> sendbookrecords1 = sendbookrecordMapper.selectSendbookrecord(new Sendbookrecord(null, sendbookrecord.getClassid(), null, null, null, sendbookrecord.getBookid(), null, purchasetime));
                 if (sendbookrecords1.size()<=0){//该班没产生过purchasetime时段用的发书单，更新库存
                     Bookinfo bookinfo1 = bookinfoMapper.selectByPrimaryKey(sendbookrecord.getBookid());
@@ -194,7 +194,6 @@ public class BookPurchasingServiceimp implements BookPurchasingService {
         catch (Exception e){
             e.printStackTrace();
         }
-
         return r;
     }
 }
