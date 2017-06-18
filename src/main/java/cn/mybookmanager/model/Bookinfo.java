@@ -1,7 +1,7 @@
 package cn.mybookmanager.model;
 
-public class Bookinfo {
-    private Integer bookid;
+public class Bookinfo implements java.io.Serializable {
+    private String bookid;
 
     private String bookname;
 
@@ -15,12 +15,28 @@ public class Bookinfo {
 
     private Integer inventory;
 
-    public Integer getBookid() {
+    private String supplier;
+
+    public Bookinfo() {
+    }
+
+    public Bookinfo(String bookid, String bookname, String author, Integer edition, String publishunit, String isbn, Integer inventory, String supplier) {
+        this.bookid = bookid;
+        this.bookname = bookname;
+        this.author = author;
+        this.edition = edition;
+        this.publishunit = publishunit;
+        this.isbn = isbn;
+        this.inventory = inventory;
+        this.supplier = supplier;
+    }
+
+    public String getBookid() {
         return bookid;
     }
 
-    public void setBookid(Integer bookid) {
-        this.bookid = bookid;
+    public void setBookid(String bookid) {
+        this.bookid = bookid == null ? null : bookid.trim();
     }
 
     public String getBookname() {
@@ -69,5 +85,13 @@ public class Bookinfo {
 
     public void setInventory(Integer inventory) {
         this.inventory = inventory;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier == null ? null : supplier.trim();
     }
 }

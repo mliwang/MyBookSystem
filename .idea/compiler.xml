@@ -22,11 +22,25 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="bookmgmt" />
+        <module name="conn" />
+        <module name="conn (1)" />
         <module name="MyBookSystem" />
+      </profile>
+      <profile default="false" name="Annotation profile for SRPMS" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="SRPMS" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="bookmgmt" target="1.5" />
+      <module name="conn" target="1.7" />
+      <module name="conn (1)" target="1.7" />
       <module name="MyBookSystem" target="1.7" />
+      <module name="SRPMS" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -5,11 +5,19 @@
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
+    <file type="web" url="file://$PROJECT_DIR$/../conn1" />
+    <file type="web" url="file://E:/Springmvc+spring+mybatis+jquery+bootstrap+Ajax/SRMProject/SRPMS" />
+    <file type="web" url="file://E:/trrr/conn" />
+    <file type="web" url="file://E:/trrr/源码/shuaishuaizheng-bookmgmt-master/bookmgmt-master/bookmgmt" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="E:/trrr/conn/pom.xml" />
+        <option value="$PROJECT_DIR$/../conn1/pom.xml" />
+        <option value="E:/trrr/源码/shuaishuaizheng-bookmgmt-master/bookmgmt-master/bookmgmt/pom.xml" />
+        <option value="E:/Springmvc+spring+mybatis+jquery+bootstrap+Ajax/SRMProject/SRPMS/pom.xml" />
       </list>
     </option>
   </component>

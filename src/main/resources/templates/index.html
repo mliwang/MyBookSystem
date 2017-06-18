@@ -4,74 +4,63 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>无标题文档</title>
     <!-- Bootstrap核心CSS文件 -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"/>
     <!-- 可选的Bootstrap主题文件(一般不用引入) -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css"></link>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css"/>
     <!-- jQuery文件，在bootstrap.min.js之前引入 -->
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <!-- Bootstrap核心JavaScript文件 -->
     <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="http://static.runoob.com/assets/vue/1.0.11/vue.min.js"></script>
     <style><!--
-    #ringht{height: 100%}
+    #ringht{height: 100%;}
+    .list-group > li.active, .list-group > li.current-page {
+        border-right: 5px solid #1ABB9C;
+    }
     -->
     </style>
 </head>
 
 <body>
-<div class="container">
+
 
 <div class="row clearfix">
 
-
-
-
-
-    <nav class="navbar navbar-default navbar-inverse" role="navigation">
+    <nav class="navbar navbar-default navbar-cls-top" role="navigation" style="margin-bottom: 0;">
         <div class="navbar-header">
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span><span class="icon-bar"></span></button>
+            <a class="navbar-brand" href="#"><img src="images/logo.jpg" alt=""/></a>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="#">Link</a>
-                </li>
-                <li>
-                    <a href="#">Link</a>
-                </li>
-
+        <div class="collapse navbar-collapse" >
+            <ul class="nav navbar-nav" style="margin-left: 90px">
+          <li> <a  href="#" ><h3>湖北中医药大学教材管理系统</h3></a></li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input class="form-control" type="text" />
-                </div> <button class="btn btn-default" type="submit">Submit</button>
-            </form>
+
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#">Link</a>
+                    <a  href="#">关于我们</a>
                 </li>
+
 
             </ul>
         </div>
     </nav>
-    <div class="row clearfix">
-        <div id="leftnav" class="col-md-2 column" style="z-index:1">
+    <nav class="navbar-default navbar-side" role="navigation" style="margin-right: 0">
+        <div class="sidebar-collapse col-md-2 column" id="sidebar-menu">
+
             <div class="panel-group table-hover" id="panel-608084">
                 <div class="panel panel-default">
-                    <div  class="panel-heading active">
-                        <h4 class="panel-title">
-                            <a class="menu-item-left" href="test2.html" target="menuFrame">
-                                <span class="glyphicon  glyphicon glyphicon-home"></span> 首页
-                            </a>
-                        </h4>
-                    </div>
+
                     <div class="panel-heading">
                         <a class="panel-title collapsed" href="#panel-element-235974" data-toggle="collapse" data-parent="#panel-608084">
                             <span class="glyphicon glyphicon-th-large"></span>基本信息</a>
                     </div>
                     <div class="panel-collapse collapse" id="panel-element-235974">
 
-                        <ul class="list-group">
+                        <ul class="list-group" >
                             <li class="list-group-item">
                                 <!-- 利用data-target指定URL -->
                                 <a class="menu-item-left" href="bookmanagersystem/basicinfo/gradeinfo.html" target="menuFrame">
@@ -84,42 +73,37 @@
                                 </a>
                             </li>
                             <li class="list-group-item">
-                                <a class="menu-item-left">
+                                <a class="menu-item-left" href="bookmanagersystem/basicinfo/bookinfo.html" target="menuFrame">
                                     <span class="glyphicon glyphicon-triangle-right"></span>教材基本信息
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a class="menu-item-left">
-                                    <span class="glyphicon glyphicon-triangle-right"></span>供货商基本信息
-                                </a>
-                            </li>
-
 
                         </ul>
 
                     </div>
-
-
                     <div class="panel-heading">
-                        <a class="panel-title" href="#panel-element-317266" data-toggle="collapse" data-parent="#panel-608084">
+                        <a class="panel-title collapsed" href="#panel-element-317266" data-toggle="collapse" data-parent="#panel-608084">
                             <span class="glyphicon glyphicon-credit-card"></span>教学计划管理</a>
                     </div>
-                    <div class="panel-collapse in" id="panel-element-317266">
+                    <div class="panel-collapse collapse" id="panel-element-317266">
 
-                        <ul class="list-group">
+                        <ul class="list-group"  >
                             <li class="list-group-item">
                                 <!-- 利用data-target指定URL -->
-                                <a class="menu-item-left" href="main77.html" target="menuFrame">
-                                    <span class="glyphicon glyphicon-triangle-right"></span>教学计划查询变更
+                                <a class="menu-item-left" href="bookmanagersystem/teachingplan/viewplaning.html" target="menuFrame">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>查看教学计划
                                 </a>
                             </li>
                             <li class="list-group-item">
-                                <a class="menu-item-left">
-                                    <span class="glyphicon glyphicon-triangle-right"></span>教材变更
+                                <a class="menu-item-left" href="bookmanagersystem/teachingplan/plaitPlaning.html" target="menuFrame">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>教学计划编制
                                 </a>
                             </li>
-
-
+                            <li class="list-group-item">
+                                <a class="menu-item-left" href="bookmanagersystem/teachingplan/Changebook.html" target="menuFrame">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>教材调整
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
@@ -129,15 +113,15 @@
                     </div>
                     <div class="panel-collapse collapse" id="panel-element-317267">
 
-                        <ul class="list-group">
+                        <ul class="list-group"  >
                             <li class="list-group-item">
                                 <!-- 利用data-target指定URL -->
-                                <a class="menu-item-left" href="Vuejs实现排序.html" target="test">
-                                    <span class="glyphicon glyphicon-triangle-right"></span>教材余量查询更
+                                <a class="menu-item-left" href="bookmanagersystem/basicinfo/bookinfo.html" target="menuFrame">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>教材余量查询
                                 </a>
                             </li>
                             <li class="list-group-item">
-                                <a class="menu-item-left">
+                                <a class="menu-item-left" href="bookmanagersystem/bookpurchasing/bookPurchasing.html" target="menuFrame">
                                     <span class="glyphicon glyphicon-triangle-right"></span>生成购书清单
                                 </a>
                             </li>
@@ -152,10 +136,12 @@
                     </div>
 
                     <div class="panel-collapse collapse" id="panel-element-317268">
-                        <ul class="list-group">
+                        <ul class="list-group"  >
                             <li class="list-group-item">
                                 <!-- 利用data-target指定URL -->
-                                <a class="menu-item-left" href="test2.html" target="test">
+                                <a class="menu-item-left" href="bookmanagersystem/bookdistribute/bookdistribute.html"
+                                   target="menuFrame"
+                                >
                                     <span class="glyphicon glyphicon-triangle-right"></span>教材发放
                                 </a>
                             </li>
@@ -169,16 +155,18 @@
                     </div>
                     <div class="panel-collapse collapse" id="searchHistory">
                         <div class="panel-body">
-                            <ul class="list-group">
+                            <ul class="list-group" >
                                 <li class="list-group-item">
                                     <!-- 利用data-target指定URL -->
-                                    <a class="menu-item-left" href="test2.html" target="test">
+                                    <a class="menu-item-left" href="bookmanagersystem/historySearch/BookHistory.html"
+                                       target="menuFrame">
                                         <span class="glyphicon glyphicon-triangle-right"></span>购书记录查询
                                     </a>
                                 </li>
                                 <li class="list-group-item">
                                     <!-- 利用data-target指定URL -->
-                                    <a class="menu-item-left" href="test2.html" target="test">
+                                    <a class="menu-item-left" href="bookmanagersystem/historySearch/BookDistributeHistory.html"
+                                       target="menuFrame">
                                         <span class="glyphicon glyphicon-triangle-right"></span>发书记录查询
                                     </a>
                                 </li>
@@ -189,18 +177,27 @@
                     </div>
                 </div>
             </div>
+
         </div>
-        <div  id="ringht" class="col-md-10 column" style="height:100%;z-index:1">
-            <iframe id="menuFrame" name="menuFrame"  scrolling="no"
-                    onload="changeFrameHeight()"    frameborder="0" width="100%" >
+        </nav>
+        <div  id="ringht" class="col-md-10 column" style="height:100%;">
+            <iframe id="menuFrame" name="menuFrame"  scrolling="yes"
+                    onload="changeFrameHeight()"    frameborder="0" width="100%" src="bookmanagersystem/main.html">
+
             </iframe>
         </div>
-    </div>
+
+
+
+
+
+
 
 
 </div>
 
-</div>
+
+
 <script src="https://code.jquery.com/jquery.js"></script>
 <!-- 包括所有已编译的插件 -->
 <script src="js/bootstrap.min.js"></script>

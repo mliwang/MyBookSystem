@@ -1,9 +1,9 @@
 package cn.mybookmanager.model;
 
-public class Gradeinfo {
-    private Integer gradeid;//年级id
+public class Gradeinfo implements java.io.Serializable {
+    private String gradeid;//年级id
 
-    private String college;//专业
+    private String college;//学院
 
     private Integer grade;//年级
 
@@ -11,25 +11,39 @@ public class Gradeinfo {
 
     private Integer numofclass;//班级数量
 
-    private Integer numofstu;//改年级总人数
+    private Integer numofstu;//改年级订书总人数
 
     private String campus;//校区
     private Integer schoolSystem;//对应专业几年制
+
+    public Gradeinfo() {
+    }
+
+    public Gradeinfo(String gradeid, String college, Integer grade, String profession, Integer numofclass, Integer numofstu, String campus, Integer schoolSystem) {
+        this.gradeid = gradeid;
+        this.college = college;
+        this.grade = grade;
+        this.profession = profession;
+        this.numofclass = numofclass;
+        this.numofstu = numofstu;
+        this.campus = campus;
+        this.schoolSystem = schoolSystem;
+    }
 
     public Integer getSchoolSystem() {
         return schoolSystem;
     }
 
     public void setSchoolSystem(Integer schoolSystem) {
-        this.schoolSystem = schoolSystem;
+        this.schoolSystem = schoolSystem== null ? 0 : schoolSystem;
     }
 
-    public Integer getGradeid() {
+    public String getGradeid() {
         return gradeid;
     }
 
-    public void setGradeid(Integer gradeid) {
-        this.gradeid = gradeid;
+    public void setGradeid(String gradeid) {
+        this.gradeid = gradeid == null ? null : gradeid.trim();
     }
 
     public String getCollege() {
@@ -45,7 +59,7 @@ public class Gradeinfo {
     }
 
     public void setGrade(Integer grade) {
-        this.grade = grade;
+        this.grade = grade== null ? 0 : grade;
     }
 
     public String getProfession() {
@@ -61,7 +75,7 @@ public class Gradeinfo {
     }
 
     public void setNumofclass(Integer numofclass) {
-        this.numofclass = numofclass;
+        this.numofclass = numofclass== null ? 0 : numofclass;
     }
 
     public Integer getNumofstu() {
@@ -69,7 +83,7 @@ public class Gradeinfo {
     }
 
     public void setNumofstu(Integer numofstu) {
-        this.numofstu = numofstu;
+        this.numofstu = numofstu== null ? 0 : numofstu;
     }
 
     public String getCampus() {

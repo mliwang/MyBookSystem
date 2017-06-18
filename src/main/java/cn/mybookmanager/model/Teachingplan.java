@@ -1,30 +1,41 @@
 package cn.mybookmanager.model;
 
-public class Teachingplan {
-    private Integer planid;
+public class Teachingplan implements java.io.Serializable {
+    private String planid;
 
-    private Integer gradeid;
+    private String gradeid;
 
     private String coursename;
 
-    private Integer bookid;
+    private String bookid;
 
     private Integer semester;
 
-    public Integer getPlanid() {
+    public Teachingplan() {
+    }
+
+    public Teachingplan(String planid, String gradeid, String coursename, String bookid, Integer semester) {
+        this.planid = planid;
+        this.gradeid = gradeid;
+        this.coursename = coursename;
+        this.bookid = bookid;
+        this.semester = semester;
+    }
+
+    public String getPlanid() {
         return planid;
     }
 
-    public void setPlanid(Integer planid) {
-        this.planid = planid;
+    public void setPlanid(String planid) {
+        this.planid = planid == null ? null : planid.trim();
     }
 
-    public Integer getGradeid() {
+    public String getGradeid() {
         return gradeid;
     }
 
-    public void setGradeid(Integer gradeid) {
-        this.gradeid = gradeid;
+    public void setGradeid(String gradeid) {
+        this.gradeid = gradeid == null ? null : gradeid.trim();
     }
 
     public String getCoursename() {
@@ -35,12 +46,12 @@ public class Teachingplan {
         this.coursename = coursename == null ? null : coursename.trim();
     }
 
-    public Integer getBookid() {
+    public String getBookid() {
         return bookid;
     }
 
-    public void setBookid(Integer bookid) {
-        this.bookid = bookid;
+    public void setBookid(String bookid) {
+        this.bookid = bookid == null ? null : bookid.trim();
     }
 
     public Integer getSemester() {

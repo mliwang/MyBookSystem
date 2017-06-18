@@ -3,62 +3,60 @@
  */
 package cn.mybookmanager.service;
 
-import cn.mybookmanager.mapper.GradeinfoMapper;
 import cn.mybookmanager.model.Gradeinfo;
 import cn.mybookmanager.pojo.KeyfiledOfGradeinfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
-@Service
-public class GradeinfoService {
-    @Autowired
-    public GradeinfoMapper gradeinfoMapper;
+
+public interface GradeinfoService {
+
     /**
      * 查询所有班级信息
      * @return
      * @throws Exception
      */
-    public  List<Gradeinfo> getAllgradeinfo() {
-
-        return gradeinfoMapper.selectAllgrade();
-    }
+      List<Gradeinfo> getAllgradeinfo() ;
 
     /**
      * 按年级id查找
      * @param gradeid
      * @return
      */
-    public  Gradeinfo selectBygradeid(Integer gradeid){
-        return gradeinfoMapper.selectByPrimaryKey(gradeid);
-    }
-
+      Gradeinfo selectBygradeid(String gradeid);
     /**
      * 得到所有学院
      * @return
      */
-    public  List<String> getAllCollege() {
+      List<String> getAllCollege() ;
 
-        return gradeinfoMapper.selectAllCollege();
-    }
+    /**
+     * 查找某学院的所有专业
+     * @param college
+     * @return
+     */
+      List<String> getProfessionBycollege(String college) ;
+
+
     /**
      * 得到所有专业
      * @return
      */
-    public  List<String> getAllProfession() {
-
-        return gradeinfoMapper.selectAllProfession();
-    }
-
+      List<String> getAllProfession();
     /**
      * 输入年级信息中的关键信息（学院，专业，年级，校区）查找年级id
      * @param keyfiledOfGradeinfo
      * @return
      */
-    public  int getGradeId(KeyfiledOfGradeinfo keyfiledOfGradeinfo){
-        return gradeinfoMapper.selectgradeId( keyfiledOfGradeinfo );
-    }
+      Gradeinfo getGradeId(KeyfiledOfGradeinfo keyfiledOfGradeinfo);
+
+    /**
+     * 找某个专业的相关信息
+     * @param profession
+     * @return
+     */
+      List<Gradeinfo> findgradeByProfession(String profession);
 
     /**
      * 增加一条年级信息
@@ -66,27 +64,27 @@ public class GradeinfoService {
      * @return
      * @throws Exception
      */
-   public int add (Gradeinfo gradeinfo){
-       return gradeinfoMapper.insert(gradeinfo);
-    }
+    int add (Gradeinfo gradeinfo);
     /**
      *
      * 删除年级信息（删除已毕业学生也通过该方法，在前台获得已毕业年级id）
      * @param gradeid
      * @return
      */
-    public int deleteByGradeid(Integer gradeid){
-        return gradeinfoMapper.deleteByPrimaryKey(gradeid);
-    }
+     int deleteByGradeid(String gradeid);
 
     /**
      * 根据gradeId修改年级信息表
      * @param gradeinfo
      * @return
      */
-    public int updateByGradeid(Gradeinfo gradeinfo){
-        return gradeinfoMapper.updateByPrimaryKey(gradeinfo);
-    }
+     int updateByGradeid(Gradeinfo gradeinfo);
+
+    /**
+     * 重新统计各个年级订书的人数
+     * @return
+     */
+    boolean CaculateStudent();
 
 
 }

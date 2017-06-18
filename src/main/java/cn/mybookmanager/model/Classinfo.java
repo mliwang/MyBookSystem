@@ -1,22 +1,36 @@
 package cn.mybookmanager.model;
 
-public class Classinfo {
-    private Integer classid;
+public class Classinfo implements java.io.Serializable {
+    private String classid;
 
     private String classname;
 
     private Integer numofclassstu;
 
-    private Integer gradeid;
+    private String gradeid;
 
     private Integer numoforderbookstu;
 
-    public Integer getClassid() {
+    private Boolean getbooks;
+
+    public Classinfo() {
+    }
+
+    public Classinfo(String classid, String classname, Integer numofclassstu, String gradeid, Integer numoforderbookstu, Boolean getbooks) {
+        this.classid = classid;
+        this.classname = classname;
+        this.numofclassstu = numofclassstu;
+        this.gradeid = gradeid;
+        this.numoforderbookstu = numoforderbookstu;
+        this.getbooks = getbooks;
+    }
+
+    public String getClassid() {
         return classid;
     }
 
-    public void setClassid(Integer classid) {
-        this.classid = classid;
+    public void setClassid(String classid) {
+        this.classid = classid == null ? null : classid.trim();
     }
 
     public String getClassname() {
@@ -35,12 +49,12 @@ public class Classinfo {
         this.numofclassstu = numofclassstu;
     }
 
-    public Integer getGradeid() {
+    public String getGradeid() {
         return gradeid;
     }
 
-    public void setGradeid(Integer gradeid) {
-        this.gradeid = gradeid;
+    public void setGradeid(String gradeid) {
+        this.gradeid = gradeid == null ? null : gradeid.trim();
     }
 
     public Integer getNumoforderbookstu() {
@@ -49,5 +63,13 @@ public class Classinfo {
 
     public void setNumoforderbookstu(Integer numoforderbookstu) {
         this.numoforderbookstu = numoforderbookstu;
+    }
+
+    public Boolean getGetbooks() {
+        return getbooks;
+    }
+
+    public void setGetbooks(Boolean getbooks) {
+        this.getbooks = getbooks;
     }
 }

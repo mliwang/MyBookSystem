@@ -3,47 +3,90 @@
 <mapper namespace="cn.mybookmanager.mapper.ClassinfoMapper" >
 
   <resultMap id="BaseResultMap" type="cn.mybookmanager.model.Classinfo" >
-    <id column="classId" property="classid" jdbcType="INTEGER" />
+    <id column="classId" property="classid" jdbcType="VARCHAR" />
     <result column="className" property="classname" jdbcType="VARCHAR" />
     <result column="numOfClassStu" property="numofclassstu" jdbcType="INTEGER" />
-    <result column="gradeId" property="gradeid" jdbcType="INTEGER" />
+    <result column="gradeId" property="gradeid" jdbcType="VARCHAR" />
     <result column="numOforderBookstu" property="numoforderbookstu" jdbcType="INTEGER" />
+    <result column="getbooks" jdbcType="BIT" property="getbooks" />
   </resultMap>
   <sql id="Base_Column_List" >
-    classId, className, numOfClassStu, gradeId, numOforderBookstu
+    classinfo.classId, classinfo.className,classinfo. numOfClassStu, classinfo.gradeId, classinfo.numOforderBookstu,classinfo.getbooks
   </sql>
   <!--查询全部信息-->
   <select id="selectAllClassinfo" resultType="cn.mybookmanager.pojo.FullClassinfo" >
-    select
-    classinfo.*,
+    select  DISTINCT
+    <include refid="Base_Column_List" />,
     college,grade,profession,campus
     from classinfo,gradeinfo
     where classinfo.gradeId=gradeinfo.gradeId
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <!--根据传入的班级信息查找完整的班级信息主要是用于查班级id-->
+  <select id="selectClassId" parameterType="cn.mybookmanager.model.Classinfo" resultType="cn.mybookmanager.model.Classinfo">
+      select  DISTINCT
+    <include refid="Base_Column_List" />
+    from classinfo
+    where  gradeId=#{gradeid,jdbcType=VARCHAR} AND
+         className= #{classname,jdbcType=VARCHAR}
+  </select>
+<!--找某个年级的班级-->
+  <select id="selectClassByGradeId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select  DISTINCT
+    <include refid="Base_Column_List" />
+    from classinfo
+    where gradeId=#{gradeid,jdbcType=VARCHAR}
+  </select>
+
+  <!--按主键查询-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from classinfo
-    where classId = #{classid,jdbcType=INTEGER}
+    where classId = #{classid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from classinfo
-    where classId = #{classid,jdbcType=INTEGER}
+    where classId = #{classid,jdbcType=VARCHAR}
+  </delete>
+
+<!--根据年级id删除对应班级-->
+  <delete id="deleteByGradeid" parameterType="java.lang.String" >
+    delete from classinfo
+    where gradeId=#{gradeid,jdbcType=VARCHAR}
   </delete>
 <!--添加班级-->
-  <insert id="insert" parameterType="cn.mybookmanager.model.Classinfo" >
-    insert into classinfo (classId, className, numOfClassStu, 
-      gradeId, numOforderBookstu)
-    values (#{classid,jdbcType=INTEGER}, #{classname,jdbcType=VARCHAR}, #{numofclassstu,jdbcType=INTEGER}, 
-      #{gradeid,jdbcType=INTEGER}, #{numoforderbookstu,jdbcType=INTEGER})
+  <insert id="insert" parameterType="cn.mybookmanager.model.Classinfo"  >
+    <selectKey keyProperty="classid" resultType="String" order="BEFORE">
+      select replace(uuid(),'-','') from dual
+    </selectKey>
+
+    insert into classinfo (classId, className, numOfClassStu,
+    gradeId, numOforderBookstu, getbooks
+    )
+    values (#{classid,jdbcType=VARCHAR}, #{classname,jdbcType=VARCHAR}, #{numofclassstu,jdbcType=INTEGER},
+    #{gradeid,jdbcType=VARCHAR}, #{numoforderbookstu,jdbcType=INTEGER}, #{getbooks,jdbcType=BIT}
+    )
   </insert>
 
   <update id="updateByPrimaryKey" parameterType="cn.mybookmanager.model.Classinfo" >
     update classinfo
-    set className = #{classname,jdbcType=VARCHAR},
-      numOfClassStu = #{numofclassstu,jdbcType=INTEGER},
-      gradeId = #{gradeid,jdbcType=INTEGER},
-      numOforderBookstu = #{numoforderbookstu,jdbcType=INTEGER}
-    where classId = #{classid,jdbcType=INTEGER}
+    <set >
+      <if test="classname != null" >
+        className = #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="numofclassstu != null" >
+        numOfClassStu = #{numofclassstu,jdbcType=INTEGER},
+      </if>
+      <if test="gradeid != null" >
+        gradeId = #{gradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="numoforderbookstu != null" >
+        numOforderBookstu = #{numoforderbookstu,jdbcType=INTEGER},
+      </if>
+      <if test="getbooks != null" >
+        getbooks = #{getbooks,jdbcType=BIT},
+      </if>
+    </set>
+    where classId = #{classid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -7,9 +7,16 @@ import java.util.List;
 
 public interface ClassinfoMapper {
 
-    int deleteByPrimaryKey(Integer classid);
+    int deleteByPrimaryKey(String classid);
 
     int insert(Classinfo record);
+
+    /**
+     * 根据年级id删除对应年级的班级
+     * @param gradeid
+     * @return
+     */
+    int deleteByGradeid(String gradeid);
 
     /**
      * 查询所有班级信息
@@ -17,10 +24,30 @@ public interface ClassinfoMapper {
      */
     List<FullClassinfo> selectAllClassinfo();
 
+    /**
+     * 根据年级id找该年级的班级
+     * @param gradeid
+     * @return
+     */
+    List<Classinfo> selectClassByGradeId(String gradeid);
 
+    /**
+     * 输入不含id的班级查找包含id的班级
+     * @param classinfo
+     * @return
+     */
+    Classinfo selectClassId(Classinfo classinfo);
+    /**
+     * 按id查找班级
+     * @param classid
+     * @return
+     */
+    Classinfo selectByPrimaryKey(String classid);
 
-    Classinfo selectByPrimaryKey(Integer classid);
-
-
+    /**
+     * 修改班级信息
+     * @param record
+     * @return
+     */
     int updateByPrimaryKey(Classinfo record);
 }

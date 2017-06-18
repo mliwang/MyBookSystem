@@ -1,22 +1,22 @@
 package cn.mybookmanager.mapper;
 
 import cn.mybookmanager.model.Bookrecords;
-import cn.mybookmanager.model.BookrecordsExample;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface BookrecordsMapper {
-    int countByExample(BookrecordsExample example);
-
-    int deleteByExample(BookrecordsExample example);
-
+    /**
+     *生成 新购书记录
+     * @param record
+     * @return
+     */
     int insert(Bookrecords record);
 
-    int insertSelective(Bookrecords record);
+    /**
+     * 根据购书记录的关键字段查看（主要有  bookMemuId, bookid, supplier,purchaseTime，可以是其中一些字段的组合）
+     * @param bookrecord
+     * @return
+     */
+    List<Bookrecords>  selectBookrecordsByPrimary(Bookrecords bookrecord);
 
-    List<Bookrecords> selectByExample(BookrecordsExample example);
-
-    int updateByExampleSelective(@Param("record") Bookrecords record, @Param("example") BookrecordsExample example);
-
-    int updateByExample(@Param("record") Bookrecords record, @Param("example") BookrecordsExample example);
 }

@@ -1,24 +1,24 @@
 package cn.mybookmanager;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 /**
  * Created by Administrator on 2016/12/13.
  */
-@EnableAutoConfiguration
+/*@EnableAutoConfiguration
+
+@ComponentScan*/
 @SpringBootApplication
-@ComponentScan
 @MapperScan("cn.mybookmanager.mapper")
 public class Application {
     private static Logger logger = Logger.getLogger(Application.class);
@@ -47,7 +47,12 @@ public class Application {
      * Main Start
      */
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+
+        SpringApplication springApplication =new SpringApplication(Application.class);
+       // springApplication.addListeners(new ApplicationStartup());//注册监听
+        springApplication.run(args);
+
+    //    SpringApplication.run(Application.class, args);
         logger.info("============= SpringBoot Start Success =============");
     }
 

@@ -3,26 +3,41 @@
  */
 package cn.mybookmanager.service;
 
-import cn.mybookmanager.mapper.ClassinfoMapper;
+import cn.mybookmanager.model.Classinfo;
 import cn.mybookmanager.pojo.FullClassinfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class ClassinfoService {
-    @Autowired
-    public ClassinfoMapper classinfoMapper;
+
+public interface ClassinfoService {
+
     /**
      * 查询所有班级信息
      * @return
      * @throws Exception
      */
-    public  List<FullClassinfo> getAllClassinfo() {
+      List<FullClassinfo> getAllClassinfo();
 
-        return classinfoMapper.selectAllClassinfo();
-    }
+    /**
+     * 按班级id查找班级信息
+     * @param key
+     * @return
+     */
+ Classinfo selectByPrimaryKey(String key);
+    /**
+     * 添加新班级
+     * @param record
+     * @return
+     */
+    int insertClass(Classinfo record);
+      int deleteClass(String classid);
+    /**
+     * 根据班级的部分信息查找班级（主要找id）
+     * @param classinfo
+     * @return
+     */
+     Classinfo getClassId(Classinfo classinfo);
+     int updateClassinfo(Classinfo classinfo);
 
 
 

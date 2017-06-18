@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="E:/Springmvc+spring+mybatis+jquery+bootstrap+Ajax/SRMProject/SRPMS" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../conn1" vcs="Git" />
+    <mapping directory="E:/trrr/源码/shuaishuaizheng-bookmgmt-master/bookmgmt-master/bookmgmt" vcs="Git" />
   </component>
 </project>

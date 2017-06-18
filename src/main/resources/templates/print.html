@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" >
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>采购清单</title>
+    <meta name="keywords" content="采购清单"/>
+    <meta name="description" content="采购清单" />
+    <meta name="HandheldFriendly" content="True" />
+    <link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script language="javascript" type="text/javascript" xml:space="preserve">
+        var LODOP; //声明为全局变量
+        function prn_print() {
+            printPage();
+            LODOP.PRINT();
+        };
+        function printPage() {
+            LODOP = getLodop();
+            LODOP.PRINT_INIT("采购清单");
+            LODOP.SET_PRINT_STYLE("FontSize", 18);
+            LODOP.SET_PRINT_STYLE("Bold", 1);
+            LODOP.SET_PRINT_STYLEA(0, "Horient", 2);
+            LODOP.SET_PRINT_PAGESIZE(2, 2100, 2970, "A4");
+            LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", document
+                    .getElementById("printInfo").innerHTML);
+        };
+        function prn_printer() {
+            printPage();
+            LODOP.PRINTA();
+        };
+        function prn_preview() {
+            LODOP = getLodop();
+            LODOP.PRINT_INIT("打印当前网页");
+            LODOP.SET_PRINT_STYLE("FontSize", 18);
+            LODOP.SET_PRINT_STYLE("Bold", 1);
+            LODOP.SET_PRINT_STYLEA(0, "Horient", 2);
+            LODOP.SET_PRINT_PAGESIZE(2, 2100, 2970, "A4");
+            LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", document
+                    .getElementById("printInfo").innerHTML);
+            LODOP.PREVIEW();
+        };
+    </script>
+</head>
+
+<body>
+
+
+
+<div class="print" id="printInfo">
+    <br clear="none" />
+    <div align="center" style="font-family:Arial;font-size:30px;margin-top:50px;letter-spacing:3px;" th:text="${myheader}"></div>
+    <br clear="none" />
+
+    <br clear="none" />
+    <!-- 因为打印控件不支持外置的CSS文件，所以样式写在了标签里面 -->
+    <div align="center">
+        <div id="printDiv" style="border-left:1px solid #000000;border-top:1px solid #000000;border-right:2px solid #000000;
+        border-bottom:2px solid #000000;text-align:center;width:1100px;padding:0px;margin:0px;align:center">
+
+            <table align="center" style="border-collapse:collapse;width:100%;padding:0px;margin:0px;">
+                <tr align="center">
+                    <th width="25%" style="font-family: 楷体,楷体_GB2312;font-size: 28px;font-weight: bolder;border-top:1px solid
+gray;border-left:1px solid gray;" rowspan="1" colspan="1">教材名称</th>
+                    <th width="11%" style="font-family: 楷体,楷体_GB2312;font-size: 28px;font-weight: bolder;border-top:1px solid
+gray;border-left:1px solid gray;" rowspan="1" colspan="1">出版社</th>
+                    <th width="8%" style="font-family: 楷体,楷体_GB2312;font-size: 28px;font-weight: bolder;border-top:1px solid
+gray;border-left:1px solid gray;" rowspan="1" colspan="1">版本</th>
+                    <th width="8%" style="font-family: 楷体,楷体_GB2312;font-size: 28px;font-weight: bolder;border-top:1px solid
+gray;border-left:1px solid gray;" rowspan="1" colspan="1">作者</th>
+                    <th width="14%" style="font-family: 楷体,楷体_GB2312;font-size: 28px;font-weight: bolder;border-top:1px solid
+gray;border-left:1px solid gray;" rowspan="1" colspan="1">供货商</th>
+
+                    <th width="5%" style="font-family: 楷体,楷体_GB2312;font-size: 28px;font-weight: bolder;border-top:1px solid
+gray;border-left:1px solid gray;" rowspan="1" colspan="1">数量</th>
+                    <th width="15%" style="font-family: 楷体,楷体_GB2312;font-size: 28px;font-weight: bolder;border-top:1px solid
+gray;border-left:1px solid gray;" rowspan="1" colspan="1">备注</th>
+                </tr>
+
+                <tr th:each="product:${lists}">
+                    <td
+                            style="letter-spacing:1px;font-family: 楷体,楷体_GB2312;font-size: 24px;border-top:1px solid gray;
+                            border-left:1px solid gray;"  th:text="${product.bookinfo.bookname}"></td>
+                    <td
+                            style="letter-spacing:1px;font-family: 楷体,楷体_GB2312;font-size: 24px;border-top:1px solid gray;
+                            border-left:1px solid gray;" th:text="${product.bookinfo.publishunit}">
+                    </td>
+                    <td
+                            style="letter-spacing:1px;font-family: 楷体,楷体_GB2312;font-size: 24px;border-top:1px solid gray;
+                            border-left:1px solid gray;text-align:center"  th:text="${product.bookinfo.edition}"></td>
+                    <td
+                            style="letter-spacing:1px;font-family: 楷体,楷体_GB2312;font-size: 24px;border-top:1px solid gray;
+                            border-left:1px solid gray;text-align:center" th:text="${product.bookinfo.author}"></td>
+                    <td
+                            style="letter-spacing:1px;font-family: 楷体,楷体_GB2312;font-size: 24px;border-top:1px solid gray;
+                            border-left:1px solid gray;text-align:center" th:text="${product.bookinfo.supplier}"></td>
+                    <td
+                            style="letter-spacing:1px;font-family: 楷体,楷体_GB2312;font-size: 24px;border-top:1px solid gray;
+                            border-left:1px solid gray;text-align:center" th:text="${product.booknum}"></td>
+
+                    <td
+                            style="letter-spacing:1px;font-family: 楷体,楷体_GB2312;font-size: 24px;border-top:1px solid gray;
+                            border-left:1px solid gray;">&nbsp;</td>
+
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+
+
+</div>
+</body>
+
+</html>

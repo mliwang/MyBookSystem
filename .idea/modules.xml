@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyBookSystem.iml" filepath="$PROJECT_DIR$/MyBookSystem.iml" />
+      <module fileurl="file://E:/Springmvc+spring+mybatis+jquery+bootstrap+Ajax/SRMProject/SRPMS/SRPMS.iml" filepath="E:/Springmvc+spring+mybatis+jquery+bootstrap+Ajax/SRMProject/SRPMS/SRPMS.iml" />
+      <module fileurl="file://E:/trrr/源码/shuaishuaizheng-bookmgmt-master/bookmgmt-master/bookmgmt/bookmgmt.iml" filepath="E:/trrr/源码/shuaishuaizheng-bookmgmt-master/bookmgmt-master/bookmgmt/bookmgmt.iml" />
+      <module fileurl="file://E:/trrr/conn/conn.iml" filepath="E:/trrr/conn/conn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../conn1/conn (1).iml" filepath="$PROJECT_DIR$/../conn1/conn (1).iml" />
     </modules>
   </component>
 </project>

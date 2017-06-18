@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SRPMS:war">
+    <output-path>E:/Springmvc+spring+mybatis+jquery+bootstrap+Ajax/SRMProject/SRPMS/target</output-path>
+    <root id="archive" name="SRPMS.war">
+      <element id="artifact" artifact-name="SRPMS:war exploded" />
+    </root>
+  </artifact>
+</component>

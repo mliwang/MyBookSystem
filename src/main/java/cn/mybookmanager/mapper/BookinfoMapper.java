@@ -1,30 +1,56 @@
 package cn.mybookmanager.mapper;
 
 import cn.mybookmanager.model.Bookinfo;
-import cn.mybookmanager.model.BookinfoExample;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface BookinfoMapper {
-    int countByExample(BookinfoExample example);
+    /**
+     * 查询所有书的相关信息
+     * @return
+     */
+      List<Bookinfo> selectAllBook();
 
-    int deleteByExample(BookinfoExample example);
+    /**
+     * 根据教材的某些信息查找符合条件的教材
+     * @param bookinfo
+     * @return
+     */
+    List<Bookinfo> selectbookBysomething(Bookinfo bookinfo);
 
-    int deleteByPrimaryKey(Integer bookid);
+    /**
+     * 根据bookid删除教材
+     * @param bookid
+     * @return
+     */
+    int deleteByPrimaryKey(String bookid);
 
+    /**
+     * 添加教材
+     * @param record
+     * @return
+     */
     int insert(Bookinfo record);
 
-    int insertSelective(Bookinfo record);
+    /**
+     * 按教材id查询教材信息
+     * @param bookid
+     * @return
+     */
+     Bookinfo selectByPrimaryKey(String bookid);
 
-    List<Bookinfo> selectByExample(BookinfoExample example);
 
-    Bookinfo selectByPrimaryKey(Integer bookid);
-
-    int updateByExampleSelective(@Param("record") Bookinfo record, @Param("example") BookinfoExample example);
-
-    int updateByExample(@Param("record") Bookinfo record, @Param("example") BookinfoExample example);
-
-    int updateByPrimaryKeySelective(Bookinfo record);
-
+    /**
+     * 按id修改教材信息
+     * @param record
+     * @return
+     */
     int updateByPrimaryKey(Bookinfo record);
+
+    /**
+     * 输入教材的关键信息查找完整的教材信息
+     * @param record
+     * @return
+     */
+    Bookinfo selectbookid(Bookinfo record);
 }

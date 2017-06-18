@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="bookmgmt:war">
+    <output-path>E:/trrr/源码/shuaishuaizheng-bookmgmt-master/bookmgmt-master/bookmgmt/target</output-path>
+    <root id="archive" name="bookmgmt-1.0-RC.war">
+      <element id="artifact" artifact-name="bookmgmt:war exploded" />
+    </root>
+  </artifact>
+</component>

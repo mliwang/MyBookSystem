@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>教学计划信息</title>
+	<!-- Bootstrap核心CSS文件 -->
+	<!-- Bootstrap核心CSS文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"/>
+	<!-- 可选的Bootstrap主题文件(一般不用引入) -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css"/>
+	<!-- jQuery文件，在bootstrap.min.js之前引入 -->
+
+	<!-- Bootstrap核心JavaScript文件 -->
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+	<script src="/js/vue2.js"></script>
+	<script src="/js/vue2.min.js"></script>
+
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
+</head>
+<body>
+<div id="MyPlaning">
+
+
+	<nav class="navbar navbar-default " role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="btn btn-primary btn-lg" style="text-shadow: black 5px 3px 3px;" >
+				<span class=" glyphicon glyphicon-eye-open "></span> 教学计划
+			</button>
+		</div>
+		<div class="collapse navbar-collapse" >
+			<ul></ul>
+			<form class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="请输入关键字，进行模糊查找" style="width:400px;"  v-model="searchData"/>
+			</div>
+             </form>
+			<ul class="nav navbar-nav navbar-right" >
+				<li >
+					<a  id="modal-521718"    href="#modal-query" data-toggle="modal" v-on:click="getCollegeList"> 精确查询</a>
+				</li>
+				<li >
+					<a  id="modal-521717"    href="#modal-container-521717" data-toggle="modal" v-on:click="getCollegeList" ><em class="glyphicon glyphicon-plus"></em> 添加</a>
+				</li>
+				<li>
+					<a href="#"  v-on:click="getList"><em class="glyphicon glyphicon-eye-open"></em> 查看全部</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+
+
+	<div class="col-md-12 column">
+		<table class="table table-striped table-hover">
+			<thead>
+			<tr>
+				<th>
+					学院
+				</th>
+				<th>
+					年级
+				</th>
+				<th>
+					专业
+				</th>
+				<th>
+					校区
+				</th>
+
+				<th>
+					课程名
+				</th>
+				<th>
+					学期
+				</th>
+				<th>
+					教材名
+				</th>
+				<th>
+					版本
+				</th>
+				<th>
+					作者
+				</th>
+				<th>
+					出版社
+				</th>
+				<th>
+					供书商
+				</th>
+				<th>
+					ISBN
+				</th>
+				<th>
+					操作
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr v-for="item in filteredplan">
+				<td >
+					{{ item.gradeinfo.college }}
+				</td>
+				<td >
+					{{ item.gradeinfo.grade }}
+				</td>
+				<td >
+					{{ item.gradeinfo.profession }}
+				</td>
+				<td>
+					{{ item.gradeinfo.campus }}
+				</td>
+
+				<td >
+				{{ item.coursename }}
+			</td>
+				<td >
+					{{ item.semester }}
+				</td>
+				<td>
+					{{ item.bookinfo.bookname }}
+				</td>
+				<td>
+					{{ item.bookinfo.edition }}
+				</td>
+				<td >
+					{{ item.bookinfo.author}}
+				</td>
+				<td >
+					{{ item.bookinfo.publishunit}}
+				</td>
+				<td >
+				{{ item.bookinfo.supplier}}
+			</td>
+				<td >
+					{{ item.bookinfo.isbn}}
+				</td>
+				<td >
+					<a  v-on:click="edititem=item"   href="#editmodal" data-toggle="modal" style="color: #777" >
+						<em class="glyphicon glyphicon-edit">编辑</em>
+					</a>
+					<a   href="#modal-container-521718" data-toggle="modal" v-on:click="deleteitem=item" style="color: #777" >
+						<em class=" glyphicon glyphicon-trash">删除</em>
+					</a>
+
+
+				</td>
+			</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+	<!--查询弹出框-->
+	<div class="modal fade" id="modal-query" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel" >
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+					<h4 class="modal-title">
+						请输入查询条件
+					</h4>
+				</div>
+
+					<div class="modal-body">
+						<p>
+						<table  align="center">
+							<tr>
+								<td>
+									<label >校区</label>
+									<select class="input_group text-left" placeholder="" class="form-control" v-model="searchcampus" style="width: 40px">
+										<option value="黄">黄</option>
+										<option value="昙">昙</option>
+									</select>
+								</td>
+								<td>
+									<label >学院</label>
+									<select class="input_group text-left" placeholder="学院" name="college" class="form-control" v-model="searchCollege" style="width: 60px">
+										<option v-for="college in Allcolleges">{{college}}</option>
+									</select>
+								</td>
+								<td>
+									<label >专业</label>
+									<select class="input_group text-left" placeholder="专业" name="profession" class="form-control" v-model="searchProfession" style="width: 60px">
+										<option v-for="profession in recomendprofessionlists">{{profession}}</option>
+									</select></td>
+								<td>
+									<label >年级</label>
+									<select class="input_group text-left"  name="grade"  placeholder="年级" class="form-control" v-model="searchGrade" style="width: 60px">
+										<option v-for="grade in Allgrade">{{grade}}</option>
+									</select>
+									</td>
+								<td>
+									<label class="label-ontop">学期</label>
+									<select class="input_group text-left" placeholder="学期" name="semester" class="form-control" v-model="searchSemester" style="width: 60px">
+										<option v-for="semester in Allsemester">{{semester}}</option>
+									</select></td>
+							</tr>
+						</table>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-default" type="button" data-dismiss="modal">取消</button>
+						<button class="btn btn-primary" type="button" v-on:click="query(searchcampus, searchCollege,searchProfession, searchGrade, searchSemester)" data-dismiss="modal">查询</button>
+					</div>
+
+			</div>
+		</div>
+	</div>
+	<!--编辑弹出框-->
+	<div class="modal fade" id="editmodal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+					<h4 >您正在编辑&nbsp;{{ edititem.gradeinfo.college }}&nbsp;{{ edititem.gradeinfo.grade }}级&nbsp;{{ edititem.gradeinfo.profession }}
+					专业的教学计划</h4>
+				</div>
+				<form class="cmxform" id="editForm" method="get" action="" v-on:submit="updateplan(edititem)">
+					<div class="modal-body">
+						<div class="row clearfix">
+								<div class="col-md-4 column">
+									<label >课程名称</label>
+									<input  type="text" class="form-control" v-model="edititem.coursename" name="bookname" required/>
+								</div>
+								<div class="col-md-4 column">
+									<label >学期</label>
+									<input type="text" class="form-control" v-model="edititem.semester" name="author" required/>
+								</div>
+								<div class="col-md-12 column">
+									<label >所使用的教材</label>
+									<p >(原教材：{{ edititem.bookinfo.publishunit }}出版&nbsp;由{{edititem.bookinfo.author}}主编的&nbsp; {{edititem.bookinfo.bookname}} &nbsp;第{{edititem.bookinfo.edition}}版)
+									</p>
+									<a href="#" v-on:click="clickupdatebook=true">更改教材</a>
+
+								</div>
+
+								<div class="col-md-12 column">
+								<!--选书部分-->
+								<div class="panel panel-default" v-show="clickupdatebook">
+									<div class="col-md-12 column">
+										<input  type="text" v-model="booknameClue"name="booknameClue" placeholder="请输入相关教材名称"  />
+										<a class="btn btn-link" v-on:click="getbooks(booknameClue,2)"><em class="glyphicon glyphicon-search"></em></a>
+									</div>
+									<div class="panel-heading col-md-12 column" style="height:30px">
+										<p align="center">请从下面选一本书</p>
+									</div>
+									<div class="panel-body col-md-12 column">
+										<table class="table">
+											<th> </th><th>书名</th><th>作者</th><th>版本 </th><th>出版单位 </th><th>ISBN </th><th>供应商 </th>
+											<tr v-for="item in mybookswhenupdate">
+												<td >
+													<input type="radio" name="book" style="width: 20px;height: 20px"
+														   v-on:click="chosebook=item"
+														   v-model="edititem.bookid"
+														   v-bind:value="item.bookid"
+														   />
+												</td>
+												<td >{{ item.bookname }}</td>
+												<td >{{ item.author }}</td>
+												<td >{{ item.edition }}</td>
+												<td>{{ item.publishunit }}</td>
+												<td >{{ item.isbn }}</td>
+												<td>{{ item.supplier }}	</td>
+											</tr>
+
+										</table>
+									</div>
+								</div>
+								</div>
+
+
+
+
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-default" type="button" data-dismiss="modal">取消</button> <button class="btn btn-primary" type="submit"  >保存修改</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--删除弹出框-->
+	<div class="modal fade" id="modal-container-521718" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel" >
+		<div class="modal-dialog" style="width: 40%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+					<h4 class="modal-title" >
+
+						确定删除该教学计划信息？
+					</h4>
+				</div>
+				<div class="modal-body">
+					<p align="center">
+					<!--	{{ deleteitem.gradeinfo.grade }}级{{deleteitem.gradeinfo.profession}}专业<br/>
+						第{{ deleteitem.semester }学期&nbsp;上{{ deleteitem.coursename }}<br/>
+						使用第{{deleteitem.bookinfo.edition}}版{{ deleteitem.bookinfo.bookname }}
+-->
+					</p>
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" type="button" data-dismiss="modal">取消</button> <button class="btn btn-primary" type="button" data-dismiss="modal" v-on:click="getitemdelete('/TeachingPlan/deleteplanByid',deleteitem)">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--添加弹出框-->
+	<div class="modal fade" id="modal-container-521717" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel" >
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+					<h4 class="modal-title" align="center">
+						添加教学计划
+					</h4>
+				</div>
+				<form class="cmxform" id="addForm" method="get" action="" v-on:submit="additem()">
+					<div class="modal-body">
+						<div class="row clearfix">
+							<div >
+								<div class="col-md-12 column"><p align="center">请填写年级信息</p></div>
+								<div class="col-md-12 column">
+								<tr align="center">
+									<td>
+										<label >校区</label>
+										<select class="input_group text-left" placeholder="" class="form-control" v-model="searchcampus" style="width: 40px" name="xq" required >
+											<option value="黄">黄</option><option value="昙">昙</option>
+										</select>
+									</td>
+									<td >
+										<label >学院</label>
+										<select class="input_group text-left" placeholder="学院" name="college" class="form-control" v-model="searchCollege" style="width: 100px"name="xy" required>
+											<option v-for="college in Allcolleges">{{college}}</option>
+										</select>
+									</td>
+									<td>
+										<label >专业</label>
+										<select class="input_group text-left" placeholder="专业" name="profession" class="form-control" v-model="searchProfession" name="zy" required style="width:100px">
+											<option v-for="profession in recomendprofessionlists">{{profession}}</option>
+										</select></td>
+									<td>
+										<label >年级</label>
+										<select class="input_group text-left"  name="grade"  placeholder="年级" class="form-control" v-model="searchGrade" style="width: 60px" name="nj" required>
+											<option v-for="grade in Allgrade">{{grade}}</option>
+										</select>
+									</td>
+
+								</tr>
+								</div>
+								<div class="col-md-6 column">
+									<label >课程名称</label>
+									<input  type="text" class="form-control" v-model="additem.coursename" name="coursename" required/>
+								</div>
+								<div class="col-md-6 column">
+									<label >学期</label>
+									<input  type="text" class="form-control" v-model="additem.semester" name="semester" required/>
+								</div>
+								<div class="col-md-12 column"><p align="center">教材相关信息</p></div>
+								<div class="col-md-12 column">
+									<input  type="text" v-model="booknameClue"name="booknameClue" placeholder="请输入相关教材名称" required />
+									<a class="btn btn-link" v-on:click="getbooks(booknameClue,1)"><em class="glyphicon glyphicon-search"></em></a>
+								</div>
+
+
+								<div class=" col-md-12 column panel panel-default">
+									<div class="panel-heading" style="height:30px">
+										<p align="center">请从下面选一本书</p>
+									</div>
+									<div class="panel-body">
+										<table class="table">
+											<th> </th><th>书名</th><th>作者</th><th>版本 </th><th>出版单位 </th><th>ISBN </th><th>供应商 </th>
+											<tr v-for="item in mybookswhenadd">
+												<td >
+													<input type="radio" name="book" style="width: 20px;height: 20px"
+														   v-on:click="additem.bookinfo=item"
+														   v-model="additem.bookid"
+														   v-bind:value="item.bookid"
+														 required/>
+												</td>
+												<td >{{ item.bookname }}</td>
+												<td >{{ item.author }}</td>
+												<td >{{ item.edition }}</td>
+												<td>{{ item.publishunit }}</td>
+												<td >{{ item.isbn }}</td>
+												<td>{{ item.supplier }}	</td>
+											</tr>
+
+										</table>
+									</div>
+								</div>
+
+
+
+
+
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-default" type="button" data-dismiss="modal">取消</button> <button class="btn btn-primary" type="submit" >保存</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+	</div>
+
+
+
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 包括所有已编译的插件 -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="http://static.runoob.com/code/js/vueapp.js"></script>
+<script src="/js/teachingplan/viewplaing.js"></script>
+
+</body>
+</html>

@@ -1,14 +1,18 @@
 package cn.mybookmanager.pojo;
 
-public class KeyfiledOfGradeinfo {
+public class KeyfiledOfGradeinfo implements java.io.Serializable {
     private String college;//学院
-
     private Integer grade;//年级
-
     private String profession;//专业
-
     private String campus;//校区
-
+    public KeyfiledOfGradeinfo() {
+    }
+    public KeyfiledOfGradeinfo(String college, Integer grade, String profession, String campus) {
+        this.college = college;
+        this.grade = grade;
+        this.profession = profession;
+        this.campus = campus;
+    }
     public String getCollege() {
         return college;
     }
@@ -32,8 +36,6 @@ public class KeyfiledOfGradeinfo {
     public void setProfession(String profession) {
         this.profession = profession == null ? null : profession.trim();
     }
-
-
     public String getCampus() {
         return campus;
     }

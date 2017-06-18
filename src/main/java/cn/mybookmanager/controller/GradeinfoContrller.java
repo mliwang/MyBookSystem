@@ -16,6 +16,7 @@ import java.util.List;
  */
 
 @Controller
+@RequestMapping("/GradeinfoContrller")
 public class GradeinfoContrller {
     private Logger logger = Logger.getLogger(GradeinfoContrller.class);
     @Autowired
@@ -28,7 +29,7 @@ public class GradeinfoContrller {
     @ResponseBody
     public List<Gradeinfo> getAllGrade() {
         List<Gradeinfo> allgradeinfo = gradeinfoService.getAllgradeinfo();
-        logger.info("进入");
+     //   logger.info("进入");
        /* for (Gradeinfo g:allgradeinfo) {
             logger.info(g.getCollege()+g.getProfession()+g.getNumofclass()+"++"+g.getNumofstu());
         }*/
@@ -47,6 +48,19 @@ public class GradeinfoContrller {
     }
 
     /**
+     * 得到某学院的所有专业
+     * @param college
+     * @return
+     */
+    @RequestMapping("/getProfessionByCollege")
+    @ResponseBody
+    public List<String> getProfessionByCollege(String college) {
+        if (college==null) return null;
+        List<String> allProfession = gradeinfoService.getProfessionBycollege(college);
+        return allProfession;
+    }
+
+    /**
      * 得到所有院系
      * @return
      */
@@ -58,16 +72,36 @@ public class GradeinfoContrller {
     }
 
     /**
-     *
+     *根据年级的关键信息找年级
      * @param keyfiledOfGradeinfo 年级信息的关键信息（学院，专业，年级，校区）
      * @return 年级id
      */
-    @RequestMapping("/getGradeId")
+    @RequestMapping("/getfindGrade")
     @ResponseBody
-    public int getGradeId(KeyfiledOfGradeinfo keyfiledOfGradeinfo) {
-        int id = gradeinfoService.getGradeId(keyfiledOfGradeinfo);
-        return id;
+    public Gradeinfo getfindGrade(KeyfiledOfGradeinfo keyfiledOfGradeinfo) {
+          logger.info("查年级id**********"+keyfiledOfGradeinfo.getCollege()+keyfiledOfGradeinfo.getGrade());
+        Gradeinfo gradeinfo = gradeinfoService.getGradeId(keyfiledOfGradeinfo);
+        return gradeinfo;
     }
+
+
+    /**
+     * 根据专业返回该专业几年制
+     * @param profession
+     * @return
+     */
+    @RequestMapping("/getschoolSystemByProfession")
+    @ResponseBody
+    public int getschoolSystemByProfession(String  profession) {
+        List<Gradeinfo> gradeinfos = gradeinfoService.findgradeByProfession(profession);
+        if(gradeinfos.size()>0){
+           // logger.info("开始找几年制"+gradeinfos.get(0).getSchoolSystem());
+           return gradeinfos.get(0).getSchoolSystem();
+        }
+        return 0;
+    }
+
+
 
     /**
      * 添加年级信息
@@ -76,13 +110,23 @@ public class GradeinfoContrller {
      */
     @RequestMapping("/addGradeInfo")
     @ResponseBody
-    public int addGradeInfo(Gradeinfo gradeinfo) {
+    public String addGradeInfo(Gradeinfo gradeinfo) {
+        //先查找看添加的年级是否重复
+        KeyfiledOfGradeinfo keyfiledOfGradeinfo = new KeyfiledOfGradeinfo(gradeinfo.getCollege(),gradeinfo.getGrade(),gradeinfo.getProfession(),gradeinfo.getCampus());
+        Gradeinfo gradeinfo1 = gradeinfoService.getGradeId(keyfiledOfGradeinfo);//根据年级关键信息查找该年级，如果找到就说明重复添加
+        if (gradeinfo1!=null){
+            //添加重复
+            return "-2000";
+        }
         int i = gradeinfoService.add(gradeinfo);
-        return i;
+        logger.info("添加年级:"+gradeinfo.getGradeid());
+        if(i!= 0) return gradeinfo.getGradeid();
+        else {return"-1000";}
+
     }
     @RequestMapping("/delete")
     @ResponseBody
-    public int delete(Integer gradeid) {
+    public int delete(String gradeid) {
         Gradeinfo gradeinfo = gradeinfoService.selectBygradeid(gradeid);
         if(gradeinfo==null){return -2;}
         int i=gradeinfoService.deleteByGradeid(gradeid);

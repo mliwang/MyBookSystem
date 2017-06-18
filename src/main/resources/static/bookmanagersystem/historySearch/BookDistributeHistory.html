@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>发书历史</title>
+	<!-- Bootstrap核心CSS文件 -->
+	<!-- Bootstrap核心CSS文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"/>
+	<!-- 可选的Bootstrap主题文件(一般不用引入) -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css"/>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+	<link href="/css/font-awesome.min.css" rel="stylesheet">
+	<!-- jQuery文件，在bootstrap.min.js之前引入 -->
+	<!-- Bootstrap核心JavaScript文件 -->
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+	<script src="/js/vue2.js"></script>
+	<script src="/js/vue2.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
+</head>
+<body>
+<div id="MyBookDishistory">
+<nav>
+	<div class="navbar-header">
+		<a  class="brand" style="text-shadow: black 2px 0px 2px;">
+			<h4><span class=" glyphicon glyphicon-bell"></span>  发书历史</h4>
+		</a>
+	</div>
+	<div class="collapse navbar-collapse" >
+		<ul class="nav navbar-nav" >
+		</ul>
+		<form class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="请输入关键字，进行模糊查找" style="width:400px;"  v-model="searchData"/>
+			</div>
+		</form>
+		<ul class="nav navbar-nav navbar-right" >
+			<li >
+				<a><label>购书时间</label>
+					<select class="input_group text-left" class="form-control" v-model="purchasingTime" >
+						<option v-for="times in timelists">{{times}}</option>
+					</select></a>
+			</li>
+
+			<li>
+				<a >
+
+
+				</a>
+			</li>
+		</ul>
+	</div>
+
+
+</nav>
+
+
+	<div class="container" style="margin-top: 40px; background-color: #f5f5f5">
+		<div class="col-md-12 column" style="margin-top: 15px;">
+			<div class="panel" style="width: 100%;height: 600px;border-color: lightseagreen"
+				 v-for="item in  recordMap" >
+	<div class="panel-heading" style="color: #000; height: 41px;background-color: lightseagreen">
+					{{item[0].classcontent}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item[0].sendtime}}</div>
+		<div class="panel-body">
+					<table  class="table table-striped table-hover"
+							style="overflow-y: scroll;  overflow-x:scroll; width: 100%; height:506px;display:block; font-size: 20px;">
+						<thead >
+						<tr ><th >教材全称</th><th >使用时段</th><th>形成时间</th><th >数量 </th>
+							</tr>
+						</thead>
+						<tbody>
+<tr  v-for="childitem in  item" >
+	<td>{{childitem.bookcontent}}</td>
+	<td>{{childitem.forsemeter}}</td>
+	<td>{{childitem.sendtime}}</td>
+	<td>{{childitem.booksnum}}</td>
+
+</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+		</div>
+
+
+
+
+
+		</div>
+
+
+
+
+
+
+
+
+
+	</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 包括所有已编译的插件 -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="http://static.runoob.com/code/js/vueapp.js"></script>
+<script src="/js/HistorySearch/bookdistributeHis.js"></script>
+
+</body>
+</html>

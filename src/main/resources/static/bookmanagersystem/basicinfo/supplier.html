@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>供货商信息</title>
+	<!-- Bootstrap核心CSS文件 -->
+	<!-- Bootstrap核心CSS文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"/>
+	<!-- 可选的Bootstrap主题文件(一般不用引入) -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css"/>
+	<!-- jQuery文件，在bootstrap.min.js之前引入 -->
+
+	<!-- Bootstrap核心JavaScript文件 -->
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+	<script src="/js/vue2.js"></script>
+	<script src="/js/vue2.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
+		<style>
+		.container-style {
+			margin-top: 80px;
+		}
+
+		.headings {
+			margin-bottom: 0;
+		}
+
+		.ratings {
+			margin-bottom: 10px;
+		}
+
+		#question-mark {
+			cursor: pointer;
+			border: 2px solid gray;
+			border-radius: 50%;
+			padding: 2px 5px 2px 5px;
+			background-color: #d7dbe2;
+		}
+
+		#panel-style {
+			background: #D6CECE;
+		}
+
+		button[type="submit"] {
+			background: #D6CECE;
+		}
+
+		@media screen and (max-width: 320px) {
+
+		.ratings {
+				margin-top: 5px;
+			}
+
+    #rate2 {
+				margin-top: 0px;
+			}
+
+    #rate3 {
+				margin-top: 0px;
+			}
+
+    #rate1 {
+				margin-top: 16px;
+			}
+
+		.parag {
+				font-size: 20px;
+			}
+
+		}
+		</style>
+	<script>
+		$(function () {
+			$('#rate').shieldRating({
+				max: 5,
+				step: 0.1,
+				value: 4,
+				markPreset: false
+			});
+
+			$('#rate1').shieldRating({
+				max: 5,
+				step: 0.1,
+				value: 1,
+				markPreset: false
+			});
+
+			$('#rate2').shieldRating({
+				max: 5,
+				step: 0.1,
+				value: 3,
+				markPreset: false
+			});
+
+			$('#rate3').shieldRating({
+				max: 5,
+				step: 0.1,
+				value: 2,
+				markPreset: false
+			});
+
+			$('#question-mark').shieldTooltip({
+				position: "top",
+				content: "Need help?"
+			});
+		})
+	</script>
+</head>
+<body>
+<div id="MySupplierinfo">
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="btn btn-primary btn-lg" style="text-shadow: black 5px 3px 3px;">
+				<span class="glyphicon glyphicon-map-marker"></span> 供货商基本信息管理
+			</button>
+			<button type="button" class="btn btn-default navbar-btn" id="modal-521717"  href="#modal-container-521717" data-toggle="modal" style="margin-left:30px;">
+				<span class="glyphicon glyphicon-plus">添加</span>
+			</button>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul  class="navbar-form navbar-left" role="search" style="width:100px;">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="搜索教材名称，供货商名称，教材作者名称" style="width:400px;" v-model="searchData"/>
+				</div>
+			</ul>
+			<ul class="nav navbar-nav navbar-right"  style="width:100px;">
+
+				<button  v-on:click="getList" type="button" class="btn btn-default navbar-btn">
+					查看全部
+				</button>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+
+
+
+	<div class="container container-style" >
+		<div class="row" >
+			<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" v-for="item in supplierlists">
+				<div class="row">
+					<p class="pull-left"><strong>{{item.nameofsupplier}}</strong>
+						<small>({{item.supphone}})</small></p>
+					<label class="pull-right"><span class="fa fa-question" id="question-mark"></span></label>
+				</div>
+				<div class="row">
+					<div class="panel panel-default" >
+						<div class="panel-heading" id="panel-style">
+							<div class="row">
+								<div class="col-xs-5 col-sm-4 col-md-5">
+									<p class="headings"><strong>教材名称</strong></p>
+								</div>
+								<div class="col-xs-4 col-sm-3 col-md-3">
+									<p class="headings"><strong>ISBN</strong></p>
+								</div>
+								<div class="col-xs-3 col-sm-4 col-md-4">
+									<p class="headings"><strong>版本</strong></p>
+								</div>
+								<div class="col-xs-3 col-sm-4 col-md-4">
+									<p class="headings"><strong>作者</strong></p>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-xs-5 col-sm-4 col-md-5">
+									<p>Item as described</p>
+									<p>Communication</p>
+									<p>Shipping time</p>
+									<p>Shipping and handling charges</p>
+								</div>
+								<div class="col-xs-5 col-sm-4 col-md-5">
+									<p>Item as described</p>
+									<p>Communication</p>
+									<p>Shipping time</p>
+									<p>Shipping and handling charges</p>
+								</div>
+								<div class="col-xs-3 col-sm-3 col-md-3">
+									<div id="rate" class="ratings"></div>
+									<div id="rate1" class="ratings"></div>
+									<div id="rate2" class="ratings"></div>
+									<div id="rate3" class="ratings"></div>
+								</div>
+
+								<div class="col-xs-4 col-sm-3 col-md-2 text-center">
+
+										<p id="p1" class="parag">50</p>
+										<p id="p2" class="parag">46</p>
+										<p id="p3" class="parag">23</p>
+										<p id="p4" class="parag">43</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+				<!--<button type="button" class="btn "  href="#modal-container-521718" data-toggle="modal" v-on:click="deleteitem=item">
+					<span class=" glyphicon glyphicon-trash"></span>删除
+				</button>
+				<button  v-on:click="edititem=item" type="button" class="btn btn-info navbar-btn"   href="#editmodal" data-toggle="modal">
+					<span class="glyphicon glyphicon-edit">编辑</span>
+				</button>-->
+
+
+	<!--编辑弹出框-->
+	<div class="modal fade" id="editmodal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+					<h4 class="modal-title" >
+
+					</h4>
+				</div>
+				<form class="cmxform" id="editForm" method="get" action="" v-on:submit="updatebookinfo(edititem)">
+					<div class="modal-body">
+						<div class="row clearfix">
+							<div class="col-md-3 column">
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-default" type="button" data-dismiss="modal">取消</button> <button class="btn btn-primary" type="submit"  >保存修改</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+<!--删除弹出框-->
+<div class="modal fade" id="modal-container-521718" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+				<h4 class="modal-title" >
+					删除
+					该教材信息？
+				</h4>
+			</div>
+			<div class="modal-body">
+
+
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" type="button" data-dismiss="modal">取消</button> <button class="btn btn-primary" type="button" data-dismiss="modal" v-on:click="getitemdelete('/deleteBookByid',deleteitem)">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--添加弹出框-->
+<div class="modal fade" id="modal-container-521717" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+				<h4 class="modal-title">
+					添加教材信息
+				</h4>
+			</div>
+			<form class="cmxform" id="commentForm" method="get" action="" v-on:submit.prevent="addbookitem()">
+			<div class="modal-body">
+				<div class="row clearfix">
+					<div class="col-md-6column">
+
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" type="button" data-dismiss="modal">取消</button> <button class="btn btn-primary" type="submit" >保存</button>
+			</div>
+				</form>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+</div>
+
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 包括所有已编译的插件 -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="http://static.runoob.com/code/js/vueapp.js"></script>
+<script src="/js/basicinfo/supplier.js"></script>
+
+</body>
+</html>
